@@ -1,12 +1,15 @@
-import { createApp } from "vue";
-import App from "./App.vue";
-import { useVuetify } from "@/vuetify/setup";
-
 import "./demos/ipc";
-// If you want use Node.js, the`nodeIntegration` needs to be enabled in the Main process.
-// import './demos/node'
+import App from "./App.vue";
+import { createApp } from "vue";
+import { useVuetify } from "@/vuetify/setup";
+import { createPinia } from "pinia";
+import { router } from "@/router";
 
 const app = createApp(App);
+const pinia = createPinia();
+
+app.use(pinia);
+app.use(router);
 useVuetify(app);
 
 app.mount("#app").$nextTick(() => {
