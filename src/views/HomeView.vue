@@ -1,29 +1,21 @@
 <template>
-  <div class="d-flex">
-    <div>
-      <VCheckboxBtn
-        v-for="category in getCategories()"
-        v-model="selectedCategories"
-        :value="category.id"
-        :label="category.name"
-        color="primary"
-        density="comfortable"
-      />
+  <div class="d-flex flex-column h-100">
+    <div class="d-flex flex-grow-1">
+      <Sidebar />
+      <AdsList />
     </div>
+    <Console />
   </div>
 </template>
 <script setup lang="ts">
-import { useOlxAdCategoryStore } from "@/store/olx/olx-ad-category";
-import { onMounted, ref } from "vue";
-import { useScrapper } from "@/scraper";
+import { onMounted, onUnmounted } from "vue";
+import Console from "@/components/Console.vue";
+import Sidebar from "@/components/Sidebar.vue";
+import AdsList from "@/components/AdsList.vue";
+import { useScraperStore } from "@/store/scraper.store";
 
-const selectedCategories = ref<number[]>([]);
+const scraperStore = useScraperStore();
 
-const { start } = useScrapper();
-const { loadCategories, getCategories } = useOlxAdCategoryStore();
-
-onMounted(() => {
-  loadCategories();
-  start();
-});
+onMounted(scraperStore.start);
+onUnmounted(scraperStore.stop);
 </script>

@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <VApp>
+  <VApp class="h-screen overflow-hidden">
     <RouterView />
   </VApp>
 </template>
