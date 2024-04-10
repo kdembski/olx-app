@@ -77,7 +77,7 @@ const getAvgPrice = (product: OlxProduct) => {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding: 0 25px 10px;
+    padding: 0 25px 5px;
 
     a {
       font-size: 14px;

@@ -1,6 +1,7 @@
 <template>
   <div class="ads-list-item-header">
     <div class="ads-list-item-header__title">
+      <span v-if="isNew" class="ads-list-item-header__badge">new</span>
       <a :href="item.ad.url" target="_blank">{{ item.ad.name }}</a>
       <span>{{ getProductInfo() }}</span>
     </div>
@@ -13,9 +14,11 @@
 </template>
 <script setup lang="ts">
 import { OlxAdWsResponse } from "@/types/types/olx-ad.types";
-import { format } from "date-fns";
+import { addMinutes, format, isFuture } from "date-fns";
+import { onMounted, ref } from "vue";
 
 const props = defineProps<{ item: OlxAdWsResponse }>();
+const isNew = ref(false);
 
 const getProductInfo = () => {
   const brand = props.item.ad.productAd?.product.brand;
@@ -28,6 +31,14 @@ const getAdPrice = () => {
   const price = props.item.ad.price;
   return price ? price + " zł" : "";
 };
+
+const updateIsNew = () => {
+  const createdAt = props.item.ad.createdAt;
+  isNew.value = isFuture(addMinutes(createdAt, 2));
+};
+
+setInterval(updateIsNew, 30000);
+onMounted(updateIsNew);
 </script>
 
 <style lang="scss">
@@ -47,6 +58,16 @@ const getAdPrice = () => {
   &__subtitle {
     display: flex;
     gap: 12px;
+  }
+
+  .ads-list-item-header__badge {
+    padding: 2px 4px;
+    font-size: 10px;
+    text-transform: uppercase;
+    background-color: rgb(var(--v-theme-success));
+    color: rgb(var(--v-theme-on-success));
+    border-radius: 2px;
+    margin-right: 5px;
   }
 }
 </style>
