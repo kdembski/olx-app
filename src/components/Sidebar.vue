@@ -1,5 +1,8 @@
 <template>
-  <div class="w-25 border-e pa-2" style="max-width: 400px">
+  <div
+    class="w-25 h-100 overflow-auto border-e px-2 py-4"
+    style="max-width: 400px"
+  >
     <Categories />
   </div>
 </template>

@@ -1,8 +1,5 @@
 <template>
   <div class="h-100 overflow-hidden">
-    <p class="text-caption text-uppercase font-weight-bold mb-2 ml-1">
-      Categories
-    </p>
     <div class="overflow-auto">
       <VCheckboxBtn
         v-for="category in olxAdCategoryStore.categories"
@@ -13,7 +10,9 @@
         class="text-body-2 mb-1"
       >
         <template #label>
-          <span class="text-body-2 ml-1">{{ category.name }}</span>
+          <span class="text-body-2 text-grey-darken-4 ml-1">
+            {{ category.name }}
+          </span>
         </template>
       </VCheckboxBtn>
     </div>

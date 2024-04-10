@@ -1,7 +1,7 @@
 <template>
   <div
     ref="consoleContainer"
-    class="h-25 overflow-auto d-flex flex-column ga-2 px-4 py-2 border bg-grey-lighten-5"
+    class="d-flex flex-column h-25 ga-2 px-4 py-2 border bg-grey-lighten-5 overflow-auto"
   >
     <pre
       v-for="item in consoleStore.items"

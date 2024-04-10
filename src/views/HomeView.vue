@@ -1,6 +1,6 @@
 <template>
-  <div class="d-flex flex-column h-100">
-    <div class="d-flex flex-grow-1">
+  <div class="d-flex flex-column h-screen overflow-hidden">
+    <div class="d-flex flex-grow-1 h-75">
       <Sidebar />
       <AdsList />
     </div>

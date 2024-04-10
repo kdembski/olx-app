@@ -1,5 +1,5 @@
 import { useApi } from "@/composables/api";
-import { OlxAdCategory } from "@/types/olx.types";
+import { OlxAdCategory } from "@/types/types/olx-ad-category.types";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 

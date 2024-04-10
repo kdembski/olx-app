@@ -24,7 +24,7 @@ export function useScrapper() {
 
         consoleStore.create({
           type: "info",
-          message: `<a href="${ad.url}">${ad.url}</a> ${ad.categoryName}`,
+          message: `<a target="_blank" href="${ad.url}">${ad.url}</a> ${ad.categoryName}`,
         });
 
         collectedOlxIds.push(ad.olxId);

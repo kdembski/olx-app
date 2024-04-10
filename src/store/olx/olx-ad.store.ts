@@ -1,6 +1,6 @@
 import { useApi } from "@/composables/api";
 import { useWebSocket } from "@/composables/websocket";
-import { OlxAdCreateInput, OlxAdSelectResult } from "@/types/olx.types";
+import { OlxAd, OlxAdCreateInput } from "@/types/types/olx-ad.types";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
@@ -12,7 +12,7 @@ export const useOlxAdStore = defineStore("olx-ad", () => {
   const create = (ad: OlxAdCreateInput) => {
     const { post } = useApi();
 
-    return post<OlxAdSelectResult>("olx/ads", ad, {
+    return post<OlxAd>("olx/ads", ad, {
       onSuccess: (data) => ws.value.send(data.id),
     });
   };

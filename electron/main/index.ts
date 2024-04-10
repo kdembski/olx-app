@@ -46,9 +46,9 @@ const indexHtml = join(process.env.DIST, "index.html");
 
 async function createWindow() {
   win = new BrowserWindow({
-    title: "Main window",
-    icon: join(process.env.VITE_PUBLIC, "favicon.ico"),
-    width: 1600,
+    title: "App",
+    icon: join(process.env.VITE_PUBLIC, "logo.png"),
+    width: 1400,
     height: 900,
     webPreferences: {
       preload,
@@ -122,4 +122,8 @@ ipcMain.handle("open-win", (_, arg) => {
   } else {
     childWindow.loadFile(indexHtml, { hash: arg });
   }
+});
+
+ipcMain.on("window-flash", () => {
+  win.flashFrame(true);
 });
