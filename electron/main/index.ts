@@ -49,7 +49,7 @@ async function createWindow() {
     title: "App",
     icon: join(process.env.VITE_PUBLIC, "logo.png"),
     width: 1400,
-    height: 900,
+    height: 1000,
     webPreferences: {
       preload,
       // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production

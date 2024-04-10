@@ -1,14 +1,10 @@
 <template>
-  <div
-    ref="consoleContainer"
-    class="d-flex flex-column h-25 ga-2 px-4 py-2 border bg-grey-lighten-5 overflow-auto"
-  >
+  <div ref="consoleContainer" class="console">
     <pre
       v-for="item in consoleStore.items"
-      class="text-caption"
-      :class="getTextColorClass(item)"
+      class="console__item"
+      :class="'console__item--' + item.type"
       v-html="getPreparedMessage(item)"
-      style="line-height: 1.4"
     />
   </div>
 </template>
@@ -27,19 +23,10 @@ const getPreparedMessage = (item: ConsoleItemI) => {
 
   if (!item.createdAt) return message;
 
-  return `<span class="text-grey-darken-2">${format(
+  return `<span class="console__item--time">${format(
     item.createdAt,
     "HH:mm:ss"
   )}</span> ${message}`;
-};
-
-const getTextColorClass = (item: ConsoleItemI) => {
-  switch (item.type) {
-    case "error":
-      return "text-red-darken-3";
-    case "info":
-      return "text-indigo-darken-3";
-  }
 };
 
 watch(consoleStore.items, async () => {
@@ -49,3 +36,33 @@ watch(consoleStore.items, async () => {
   consoleContainer.value.scrollTop = consoleContainer.value.scrollHeight;
 });
 </script>
+
+<style lang="scss">
+.console {
+  display: flex;
+  flex-direction: column;
+  height: 25%;
+  max-height: 200px;
+  gap: 10px;
+  padding: 10px 20px;
+  overflow: auto;
+  border-top: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
+  background-color: rgb(var(--v-theme-surface));
+
+  &__item {
+    font-size: 12px;
+
+    &--error {
+      color: rgb(var(--v-theme-error));
+    }
+
+    &--info {
+      color: rgba(var(--v-theme-on-surface), var(--v-high-emphasis-opacity));
+    }
+
+    &--time {
+      color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
+    }
+  }
+}
+</style>

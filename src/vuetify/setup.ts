@@ -6,7 +6,12 @@ import * as vuetifyComponents from "vuetify/components";
 import "vuetify/styles";
 
 export const useVuetify = (app: App) => {
+  const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)");
+
   const vuetify = createVuetify({
+    theme: {
+      defaultTheme: isDarkMode.matches ? "dark" : "light",
+    },
     icons: {
       defaultSet: "mdi",
       aliases,

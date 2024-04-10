@@ -10,6 +10,7 @@ export interface OlxProductAd {
     ad: {
       name: string;
       price: number;
+      url: string;
       createdAt: Date;
     };
   }[];

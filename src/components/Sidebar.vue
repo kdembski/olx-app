@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="w-25 h-100 overflow-auto border-e px-2 py-4"
-    style="max-width: 400px"
-  >
+  <div class="sidebar">
     <Categories />
   </div>
 </template>
@@ -10,3 +7,15 @@
 <script setup lang="ts">
 import Categories from "@/components/Categories.vue";
 </script>
+
+<style lang="scss">
+.sidebar {
+  height: 100%;
+  width: 30%;
+  max-width: 400px;
+  overflow: auto;
+  padding: 15px 10px;
+  border-right: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
+  background-color: rgb(var(--v-theme-surface));
+}
+</style>
