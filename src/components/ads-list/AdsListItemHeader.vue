@@ -61,6 +61,8 @@ onMounted(updateIsNew);
   }
 
   .ads-list-item-header__badge {
+    position: relative;
+    top: -1px;
     padding: 2px 4px;
     font-size: 10px;
     text-transform: uppercase;

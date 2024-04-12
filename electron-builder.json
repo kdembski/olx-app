@@ -4,6 +4,7 @@
   "asar": true,
   "productName": "olx-app",
   "directories": {
+    "buildResources": "public",
     "output": "release/${version}"
   },
   "files": ["dist", "dist-electron"],

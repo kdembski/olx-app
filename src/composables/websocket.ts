@@ -1,5 +1,5 @@
 import { useApi } from "@/composables/api";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 export function useWebSocket<MessageT>(path: string) {
   const ws = ref<WebSocket>();
@@ -13,7 +13,7 @@ export function useWebSocket<MessageT>(path: string) {
 
   const isConnecting = () => ws.value?.readyState === WebSocket.CONNECTING;
 
-  const initWebSocket = () => {
+  const init = () => {
     if (isOpen()) {
       return;
     }
@@ -21,13 +21,18 @@ export function useWebSocket<MessageT>(path: string) {
     const { wsUrl } = useApi();
     const url = wsUrl(path);
     ws.value = new WebSocket(url);
-    ws.value.onmessage = onmessage.value;
+    ws.value.onclose = init;
+
+    ws.value.onmessage = (e) => {
+      if (!e.data || e.data === "ping") return;
+      onmessage.value?.(e);
+    };
   };
 
   const send = async (message: MessageT) => {
     if (!ws.value || isClosed()) {
       setTimeout(() => {
-        initWebSocket();
+        init();
         send(message);
       }, 5);
 
@@ -44,6 +49,8 @@ export function useWebSocket<MessageT>(path: string) {
 
     ws.value?.send(JSON.stringify(message));
   };
+
+  watch(onmessage, init);
 
   return { send, onmessage };
 }

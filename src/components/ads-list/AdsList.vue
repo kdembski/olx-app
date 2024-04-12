@@ -1,6 +1,6 @@
 <template>
   <div class="ads">
-    <VList class="ads-list" lines="two">
+    <VList v-if="foundItems.length" class="ads-list" lines="two">
       <VListItem
         v-for="item in foundItems"
         class="ads-list__item"
@@ -12,6 +12,7 @@
         </div>
       </VListItem>
     </VList>
+    <div v-else class="ads-list__empty">Waiting for ads...</div>
   </div>
 </template>
 <script setup lang="ts">
@@ -21,23 +22,24 @@ import { useOlxAdCategoryStore } from "@/store/olx/olx-ad-category.store";
 import { OlxAdWsResponse } from "@/types/types/olx-ad.types";
 import AdsListItemContent from "@/components/ads-list/AdsListItemContent.vue";
 import AdsListItemHeader from "@/components/ads-list/AdsListItemHeader.vue";
+import { useSettingsStore } from "@/store/settings.store";
 
 const foundItems = ref<OlxAdWsResponse[]>([]);
 
 const olxAdCategoryStore = useOlxAdCategoryStore();
 const olxAdStore = useOlxAdStore();
+const settingsStore = useSettingsStore();
 
-olxAdStore.ws.onmessage = async (event: MessageEvent<string>) => {
-  if (!event.data) return;
-
+olxAdStore.ws.onmessage = async (event) => {
   const item: OlxAdWsResponse = JSON.parse(event.data);
 
   if (olxAdCategoryStore.selectedIds.includes(item.ad.categoryId)) {
-    item.products = item.products.filter(
-      (product) => product.productAds.length > 1
-    );
     foundItems.value.unshift(item);
     window.ipcRenderer.send("window-flash");
+
+    if (settingsStore.openWhenFound) {
+      window.ipcRenderer.send("open-url", item.ad.url);
+    }
   }
 };
 </script>
@@ -73,6 +75,12 @@ olxAdStore.ws.onmessage = async (event: MessageEvent<string>) => {
         color: rgba(var(--v-theme-on-surface), 0.9);
       }
     }
+  }
+
+  &__empty {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
   }
 
   .v-list-item__content {

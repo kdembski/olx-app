@@ -12,7 +12,7 @@
     >
       <template #title>
         <div class="panel__header">
-          <p>{{ getProductInfo(product) }}</p>
+          <p v-html="getProductInfo(product)" />
           <span class="price">{{ getAvgPrice(product) }}</span>
         </div>
       </template>
@@ -43,7 +43,7 @@ import {
 defineProps<{ item: OlxAdWsResponse }>();
 
 const getProductInfo = (product: OlxProduct & OlxProductAdsCount) => {
-  return `${product.brand} ${product.model} (${product._count.productAds})`;
+  return `${product.brand} ${product.model} <span>(${product._count.productAds})</span>`;
 };
 
 const getAvgPrice = (product: OlxProduct) => {
@@ -54,8 +54,6 @@ const getAvgPrice = (product: OlxProduct) => {
 
 <style lang="scss">
 .ads-list-item-content {
-  margin: 0 -9px;
-
   .v-expansion-panel-title {
     padding: 10px;
     min-height: 36px !important;
@@ -77,10 +75,16 @@ const getAvgPrice = (product: OlxProduct) => {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding: 0 25px 5px;
+    padding: 0 20px;
 
     a {
       font-size: 14px;
+    }
+  }
+
+  &:not(:last-child) {
+    .panel__content {
+      padding-bottom: 10px;
     }
   }
 }

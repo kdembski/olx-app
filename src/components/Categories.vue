@@ -1,16 +1,14 @@
 <template>
-  <div class="h-100 overflow-hidden">
-    <div class="overflow-auto">
-      <VCheckboxBtn
-        v-for="category in olxAdCategoryStore.categories"
-        v-model="olxAdCategoryStore.selectedIds"
-        :value="category.id"
-        color="primary"
-        density="compact"
-        class="categories-checkbox"
-        :label="category.name"
-      />
-    </div>
+  <div>
+    <VCheckboxBtn
+      v-for="category in olxAdCategoryStore.categories"
+      v-model="olxAdCategoryStore.selectedIds"
+      :value="category.id"
+      color="primary"
+      density="compact"
+      class="categories-checkbox"
+      :label="category.name"
+    />
   </div>
 </template>
 

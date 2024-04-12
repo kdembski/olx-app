@@ -47,7 +47,7 @@ const indexHtml = join(process.env.DIST, "index.html");
 async function createWindow() {
   win = new BrowserWindow({
     title: "App",
-    icon: join(process.env.VITE_PUBLIC, "logo.png"),
+    icon: join(process.env.VITE_PUBLIC, "icon.png"),
     width: 1400,
     height: 1000,
     webPreferences: {
@@ -126,4 +126,8 @@ ipcMain.handle("open-win", (_, arg) => {
 
 ipcMain.on("window-flash", () => {
   win.flashFrame(true);
+});
+
+ipcMain.on("open-url", (event, data) => {
+  shell.openExternal(data);
 });

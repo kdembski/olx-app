@@ -8,16 +8,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted, onUnmounted } from "vue";
 import Console from "@/components/Console.vue";
 import Sidebar from "@/components/Sidebar.vue";
 import AdsList from "@/components/ads-list/AdsList.vue";
-import { useScraperStore } from "@/store/scraper.store";
-
-const scraperStore = useScraperStore();
-
-onMounted(scraperStore.start);
-onUnmounted(scraperStore.stop);
 </script>
 
 <style lang="scss">
