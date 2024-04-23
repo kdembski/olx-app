@@ -9,7 +9,7 @@
 </template>
 <script setup lang="ts">
 import Console from "@/components/Console.vue";
-import Sidebar from "@/components/Sidebar.vue";
+import Sidebar from "@/components/sidebar/Sidebar.vue";
 import AdsList from "@/components/ads-list/AdsList.vue";
 </script>
 

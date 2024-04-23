@@ -1,6 +1,6 @@
 {
   "name": "olx-app",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist-electron/main/index.js",
   "private": true,
   "debug": {
@@ -27,6 +27,7 @@
     "vue-tsc": "^2.0.6"
   },
   "dependencies": {
+    "@vueuse/core": "^10.9.0",
     "axios": "^1.6.8",
     "date-fns": "^3.6.0",
     "lodash": "^4.17.21",

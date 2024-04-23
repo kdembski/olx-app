@@ -1,8 +1,12 @@
+import { useLocalStorage } from "@vueuse/core";
 import { defineStore } from "pinia";
-import { ref } from "vue";
 
 export const useSettingsStore = defineStore("settings", () => {
-  const openWhenFound = ref(true);
+  const openWhenFound = useLocalStorage("open-when-found", true);
+  const blacklistedUserIds = useLocalStorage(
+    "blacklisted-user-ids",
+    new Set<string>()
+  );
 
-  return { openWhenFound };
+  return { openWhenFound, blacklistedUserIds };
 });

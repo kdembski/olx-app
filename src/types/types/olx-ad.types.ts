@@ -7,6 +7,7 @@ import {
 export interface OlxAd {
   id: number;
   olxId: string;
+  olxUserId: string;
   name: string;
   price: number;
   url: string;
@@ -21,14 +22,6 @@ export interface OlxAdProduct {
       model: string;
     };
   } | null;
-}
-
-export interface OlxAdCreateInput {
-  olxId: string;
-  name: string;
-  price: number;
-  url: string;
-  categoryName: string;
 }
 
 export interface OlxAdWsResponse {

@@ -33,13 +33,14 @@ const settingsStore = useSettingsStore();
 olxAdStore.ws.onmessage = async (event) => {
   const item: OlxAdWsResponse = JSON.parse(event.data);
 
-  if (olxAdCategoryStore.selectedIds.includes(item.ad.categoryId)) {
-    foundItems.value.unshift(item);
-    window.ipcRenderer.send("window-flash");
+  if (!olxAdCategoryStore.selectedIds.includes(item.ad.categoryId)) return;
+  if (settingsStore.blacklistedUserIds.has(item.ad.olxUserId)) return;
 
-    if (settingsStore.openWhenFound) {
-      window.ipcRenderer.send("open-url", item.ad.url);
-    }
+  foundItems.value.unshift(item);
+  window.ipcRenderer.send("window-flash");
+
+  if (settingsStore.openWhenFound) {
+    window.ipcRenderer.send("open-url", item.ad.url);
   }
 };
 </script>

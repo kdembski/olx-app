@@ -1,11 +1,12 @@
 import { useApi } from "@/composables/api";
 import { OlxAdCategory } from "@/types/types/olx-ad-category.types";
+import { useLocalStorage } from "@vueuse/core";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 
 export const useOlxAdCategoryStore = defineStore("olx-ad-category", () => {
   const _categories = ref<OlxAdCategory[]>([]);
-  const _selectedIds = ref<number[]>([]);
+  const _selectedIds = useLocalStorage<number[]>("selected-category-ids", []);
 
   const selectedIds = computed({
     get() {
