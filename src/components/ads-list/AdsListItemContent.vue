@@ -34,11 +34,8 @@
 </template>
 <script setup lang="ts">
 import { formatDistanceToNow } from "date-fns";
-import { OlxAdWsResponse } from "@/types/types/olx-ad.types";
-import {
-  OlxProduct,
-  OlxProductAdsCount,
-} from "@/types/types/olx-product.types";
+import { OlxAdWsResponse } from "@/types/olx/olx-ad.types";
+import { OlxProduct, OlxProductAdsCount } from "@/types/olx/olx-product.types";
 
 defineProps<{ item: OlxAdWsResponse }>();
 

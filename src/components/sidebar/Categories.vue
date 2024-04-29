@@ -17,13 +17,8 @@
 
 <script setup lang="ts">
 import { useOlxAdCategoryStore } from "@/store/olx/olx-ad-category.store";
-import { onMounted } from "vue";
 
 const olxAdCategoryStore = useOlxAdCategoryStore();
-
-onMounted(async () => {
-  await olxAdCategoryStore.load();
-});
 </script>
 
 <style lang="scss">

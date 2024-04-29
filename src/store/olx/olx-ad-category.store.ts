@@ -1,5 +1,7 @@
 import { useApi } from "@/composables/api";
-import { OlxAdCategory } from "@/types/types/olx-ad-category.types";
+import { useWebSocket } from "@/composables/websocket";
+import { OlxAdCategory } from "@/types/olx/olx-ad-category.types";
+import { UseWebSocket } from "@/types/websocket.types";
 import { useLocalStorage } from "@vueuse/core";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
@@ -7,6 +9,9 @@ import { computed, ref } from "vue";
 export const useOlxAdCategoryStore = defineStore("olx-ad-category", () => {
   const _categories = ref<OlxAdCategory[]>([]);
   const _selectedIds = useLocalStorage<number[]>("selected-category-ids", []);
+  const ws = ref<UseWebSocket<number>>(
+    useWebSocket<number>("olx/ads/categories")
+  );
 
   const selectedIds = computed({
     get() {
@@ -42,7 +47,13 @@ export const useOlxAdCategoryStore = defineStore("olx-ad-category", () => {
     });
   };
 
+  load();
+  ws.value.onmessage = (e) => {
+    categories.value = JSON.parse(e.data);
+  };
+
   return {
+    ws,
     categories,
     categoryNames,
     categoryIds,

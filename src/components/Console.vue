@@ -41,8 +41,8 @@ watch(consoleStore.items, async () => {
 .console {
   display: flex;
   flex-direction: column;
-  height: 25%;
-  max-height: 120px;
+  height: 15%;
+  max-height: 200px;
   gap: 10px;
   padding: 10px 20px;
   overflow: auto;

@@ -13,7 +13,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { OlxAdWsResponse } from "@/types/types/olx-ad.types";
+import { OlxAdWsResponse } from "@/types/olx/olx-ad.types";
 import { addMinutes, format, isFuture } from "date-fns";
 import { onMounted, ref } from "vue";
 

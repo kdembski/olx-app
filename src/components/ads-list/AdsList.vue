@@ -19,7 +19,7 @@
 import { ref } from "vue";
 import { useOlxAdStore } from "@/store/olx/olx-ad.store";
 import { useOlxAdCategoryStore } from "@/store/olx/olx-ad-category.store";
-import { OlxAdWsResponse } from "@/types/types/olx-ad.types";
+import { OlxAdWsResponse } from "@/types/olx/olx-ad.types";
 import AdsListItemContent from "@/components/ads-list/AdsListItemContent.vue";
 import AdsListItemHeader from "@/components/ads-list/AdsListItemHeader.vue";
 import { useSettingsStore } from "@/store/settings.store";

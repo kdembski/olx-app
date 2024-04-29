@@ -11,6 +11,11 @@
 import Console from "@/components/Console.vue";
 import Sidebar from "@/components/sidebar/Sidebar.vue";
 import AdsList from "@/components/ads-list/AdsList.vue";
+import { useScraperStore } from "@/store/scraper.store";
+import { onMounted } from "vue";
+
+const { start } = useScraperStore();
+onMounted(start);
 </script>
 
 <style lang="scss">
@@ -24,7 +29,7 @@ import AdsList from "@/components/ads-list/AdsList.vue";
   &__main {
     display: flex;
     flex-grow: 1;
-    height: 75%;
+    height: 85%;
   }
 }
 </style>
