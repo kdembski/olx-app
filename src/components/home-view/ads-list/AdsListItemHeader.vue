@@ -3,19 +3,23 @@
     <div class="ads-list-item-header__title">
       <span v-if="isNew" class="ads-list-item-header__badge">new</span>
       <a :href="item.ad.url" target="_blank">{{ item.ad.name }}</a>
-      <span>{{ getProductInfo() }}</span>
+      <CText variant="tonal">{{ getProductInfo() }}</CText>
     </div>
-
     <div class="ads-list-item-header__subtitle">
-      <span>{{ format(item.ad.createdAt, "HH:mm:ss") }}</span>
-      <span class="price">{{ getAdPrice() }}</span>
+      <CText variant="tonal">
+        {{ format(item.ad.createdAt, "HH:mm:ss") }}
+      </CText>
+      <CText variant="bold">{{ getAdPrice() }}</CText>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { OlxAdWsResponse } from "@/types/olx/olx-ad.types";
 import { addMinutes, format, isFuture } from "date-fns";
 import { onMounted, ref } from "vue";
+
+import CText from "@/components/_base/CText.vue";
+
+import { OlxAdWsResponse } from "@/types/olx/olx-ad.types";
 
 const props = defineProps<{ item: OlxAdWsResponse }>();
 const isNew = ref(false);
@@ -49,10 +53,6 @@ onMounted(updateIsNew);
 
   &__title {
     line-height: 1.2;
-
-    a {
-      margin-right: 5px;
-    }
   }
 
   &__subtitle {
@@ -60,7 +60,7 @@ onMounted(updateIsNew);
     gap: 12px;
   }
 
-  .ads-list-item-header__badge {
+  &__badge {
     position: relative;
     top: -1px;
     padding: 2px 4px;
@@ -69,6 +69,10 @@ onMounted(updateIsNew);
     background-color: rgb(var(--v-theme-success));
     color: rgb(var(--v-theme-on-success));
     border-radius: 2px;
+    margin-right: 5px;
+  }
+
+  a {
     margin-right: 5px;
   }
 }

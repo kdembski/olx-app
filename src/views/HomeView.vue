@@ -1,35 +1,15 @@
 <template>
-  <div class="home-view">
-    <div class="home-view__main">
-      <Sidebar />
-      <AdsList />
-    </div>
-    <Console />
-  </div>
+  <Sidebar />
+  <AdsList />
 </template>
 <script setup lang="ts">
-import Console from "@/components/Console.vue";
-import Sidebar from "@/components/sidebar/Sidebar.vue";
-import AdsList from "@/components/ads-list/AdsList.vue";
-import { useScraperStore } from "@/store/scraper.store";
 import { onMounted } from "vue";
+
+import AdsList from "@/components/home-view/ads-list/AdsList.vue";
+import Sidebar from "@/components/home-view/sidebar/Sidebar.vue";
+
+import { useScraperStore } from "@/store/scraper.store";
 
 const { start } = useScraperStore();
 onMounted(start);
 </script>
-
-<style lang="scss">
-.home-view {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
-  border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
-
-  &__main {
-    display: flex;
-    flex-grow: 1;
-    height: 85%;
-  }
-}
-</style>

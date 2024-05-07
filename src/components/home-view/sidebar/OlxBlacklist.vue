@@ -1,31 +1,33 @@
 <template>
-  <div class="sidebar-section blacklist">
-    <p class="sidebar-section__title">Olx users blacklist</p>
+  <SidebarSection>
+    <template #title> Olx users blacklist </template>
     <div v-if="settingsStore.blacklistedUserIds.size" class="blacklist__chips">
-      <VChip
+      <CChip
         v-for="id in settingsStore.blacklistedUserIds"
         :key="id"
-        density="compact"
         closable
         @click:close="() => removeBlacklistedId(id)"
       >
         {{ id }}
-      </VChip>
+      </CChip>
     </div>
-    <VTextField
+    <CTextField
       v-model="providedId"
-      :density="'compact'"
       placeholder="Provide the user id you want to blacklist"
       class="blacklist__input"
-      hide-details
       @keyup.enter="addBlacklistedId"
     />
-  </div>
+  </SidebarSection>
 </template>
 
 <script setup lang="ts">
-import { useSettingsStore } from "@/store/settings.store";
 import { ref } from "vue";
+
+import CChip from "@/components/_base/CChip.vue";
+import CTextField from "@/components/_base/CTextField.vue";
+import SidebarSection from "@/components/home-view/sidebar/SidebarSection.vue";
+
+import { useSettingsStore } from "@/store/settings.store";
 
 const settingsStore = useSettingsStore();
 const providedId = ref<string>();

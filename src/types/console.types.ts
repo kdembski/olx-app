@@ -1,5 +1,6 @@
 export interface ConsoleItemI {
-  type: "info" | "error";
+  label?: "bot" | "general";
+  type: "info" | "error" | "success";
   message: string;
   createdAt?: Date;
 }

@@ -1,46 +1,50 @@
 <template>
-  <VExpansionPanels
-    v-if="item.products?.length"
-    variant="accordion"
-    class="ads-list-item-content"
-  >
-    <VExpansionPanel
+  <CAccordionGroup v-if="item.products?.length" class="ads-list-item-content">
+    <CAccordion
       v-for="product in item.products"
-      elevation="0"
-      class="ads-list-item-content__panel panel"
-      :key="product.id"
+      class="ads-list-item-content__card card"
+      :value="product.id"
     >
       <template #title>
-        <div class="panel__header">
-          <p v-html="getProductInfo(product)" />
-          <span class="price">{{ getAvgPrice(product) }}</span>
+        <div class="card__header">
+          <div>
+            <CText>{{ getProductInfo(product) }}</CText>
+            <CText variant="tonal"> ({{ product._count.productAds }}) </CText>
+          </div>
+          <CText variant="bold"> {{ getAvgPrice(product) }}</CText>
         </div>
       </template>
 
-      <template #text>
-        <div class="panel__content">
+      <template #content>
+        <div class="card__content">
           <div v-for="{ ad } in product.productAds">
             <a :href="ad.url" target="_blank">{{ ad.name }}</a>
-
             <div class="d-flex ga-3">
-              <span>{{ formatDistanceToNow(ad.createdAt) }} ago</span>
-              <span class="price">{{ ad.price }} zł</span>
+              <CText variant="tonal" size="small">
+                {{ formatDistanceToNow(ad.createdAt) }} ago
+              </CText>
+              <CText variant="bold" size="small"> {{ ad.price }} zł </CText>
             </div>
           </div>
         </div>
       </template>
-    </VExpansionPanel>
-  </VExpansionPanels>
+    </CAccordion>
+  </CAccordionGroup>
 </template>
 <script setup lang="ts">
 import { formatDistanceToNow } from "date-fns";
+
+import CAccordion from "@/components/_base/CAccordion.vue";
+import CAccordionGroup from "@/components/_base/CAccordionGroup.vue";
+import CText from "@/components/_base/CText.vue";
+
 import { OlxAdWsResponse } from "@/types/olx/olx-ad.types";
 import { OlxProduct, OlxProductAdsCount } from "@/types/olx/olx-product.types";
 
 defineProps<{ item: OlxAdWsResponse }>();
 
 const getProductInfo = (product: OlxProduct & OlxProductAdsCount) => {
-  return `${product.brand} ${product.model} <span>(${product._count.productAds})</span>`;
+  return `${product.brand} ${product.model}`;
 };
 
 const getAvgPrice = (product: OlxProduct) => {
@@ -50,18 +54,7 @@ const getAvgPrice = (product: OlxProduct) => {
 </script>
 
 <style lang="scss">
-.ads-list-item-content {
-  .v-expansion-panel-title {
-    padding: 10px;
-    min-height: 36px !important;
-  }
-
-  .v-expansion-panel-text__wrapper {
-    padding: 5px 0 0 0;
-  }
-}
-
-.panel {
+.card {
   &__header {
     display: flex;
     align-items: center;
@@ -80,7 +73,7 @@ const getAvgPrice = (product: OlxProduct) => {
   }
 
   &:not(:last-child) {
-    .panel__content {
+    .card__content {
       padding-bottom: 10px;
     }
   }

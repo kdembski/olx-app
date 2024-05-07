@@ -7,6 +7,7 @@ export const useConsoleStore = defineStore("console", () => {
 
   const create = (item: ConsoleItemI) => {
     item.createdAt = new Date();
+    item.label = item.label || "general";
     items.value.push(item);
   };
 

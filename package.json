@@ -1,6 +1,6 @@
 {
   "name": "olx-app",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "dist-electron/main/index.js",
   "private": true,
   "debug": {
@@ -24,7 +24,8 @@
     "vite-plugin-electron": "^0.28.4",
     "vite-plugin-electron-renderer": "^0.14.5",
     "vue": "^3.4.21",
-    "vue-tsc": "^2.0.6"
+    "vue-tsc": "^2.0.6",
+    "@trivago/prettier-plugin-sort-imports": "^4.2.0"
   },
   "dependencies": {
     "@vueuse/core": "^10.9.0",

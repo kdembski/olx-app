@@ -1,49 +1,85 @@
-import { useApi } from "@/composables/api";
-import { useWebSocket } from "@/composables/websocket";
-import { OlxAdCategory } from "@/types/olx/olx-ad-category.types";
-import { UseWebSocket } from "@/types/websocket.types";
 import { useLocalStorage } from "@vueuse/core";
+import { addMinutes, isFuture } from "date-fns";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 
+import { useApi } from "@/composables/api";
+import { useWebSocket } from "@/composables/websocket";
+
+import { useConsoleStore } from "@/store/console.store";
+
+import {
+  OlxAdCategory,
+  OlxAdCategoryCreateInput,
+  OlxAdCategoryUpdateInput,
+} from "@/types/olx/olx-ad-category.types";
+import { UseWebSocket } from "@/types/websocket.types";
+
 export const useOlxAdCategoryStore = defineStore("olx-ad-category", () => {
-  const _categories = ref<OlxAdCategory[]>([]);
-  const _selectedIds = useLocalStorage<number[]>("selected-category-ids", []);
+  const isUpdating = ref(false);
+  const isLoading = ref(false);
+
+  const categories = ref<OlxAdCategory[]>([]);
+  const selectedIds = useLocalStorage<number[]>("selected-category-ids", []);
+
   const ws = ref<UseWebSocket<number>>(
-    useWebSocket<number>("olx/ads/categories")
+    useWebSocket<number>("olx/ads/categories"),
   );
 
-  const selectedIds = computed({
-    get() {
-      return _selectedIds.value;
-    },
-    set(value) {
-      _selectedIds.value = value;
-    },
-  });
-
-  const categories = computed({
-    get() {
-      return _categories.value;
-    },
-    set(value) {
-      _categories.value = value;
-    },
-  });
+  const { get, post, put, _delete } = useApi();
+  const consoleStore = useConsoleStore();
 
   const categoryNames = computed(() =>
-    categories.value.map((category) => category.name)
+    categories.value.map((category) => category.name),
   );
 
   const categoryIds = computed(() =>
-    categories.value.map((category) => category.id)
+    categories.value.map((category) => category.id),
   );
 
-  const load = async () => {
-    const { get } = useApi();
+  const getCategoryById = (id: number) =>
+    categories.value.find((category) => category.id === id);
 
+  const load = async () => {
+    isLoading.value = true;
     return get<OlxAdCategory[]>("olx/ads/categories", {
       onSuccess: (data) => (categories.value = data),
+      onFinally: () => (isLoading.value = false),
+    });
+  };
+
+  const create = async (data: OlxAdCategoryCreateInput) => {
+    return post<OlxAdCategory>("olx/ads/categories", data, {
+      onSuccess: () => {
+        consoleStore.create({
+          type: "success",
+          message: `Olx category '${data.name}' created successfully`,
+        });
+      },
+    });
+  };
+
+  const update = async (data: OlxAdCategoryUpdateInput) => {
+    return put<OlxAdCategory>("olx/ads/categories/" + data.id, data, {
+      onSuccess: () => {
+        consoleStore.create({
+          type: "success",
+          message: `Olx category '${data.name}' updated successfully`,
+        });
+      },
+    });
+  };
+
+  const remove = async (category: OlxAdCategory) => {
+    if (!isFuture(addMinutes(category.createdAt, 5))) return;
+
+    return _delete<OlxAdCategory>("olx/ads/categories/" + category.id, {
+      onSuccess: () => {
+        consoleStore.create({
+          type: "success",
+          message: `Olx category '${category.name}' deleted successfully`,
+        });
+      },
     });
   };
 
@@ -58,6 +94,12 @@ export const useOlxAdCategoryStore = defineStore("olx-ad-category", () => {
     categoryNames,
     categoryIds,
     selectedIds,
+    isLoading,
+    isUpdating,
     load,
+    create,
+    update,
+    remove,
+    getCategoryById,
   };
 });
