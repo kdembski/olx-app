@@ -10,8 +10,12 @@
   border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
   padding: 10px 20px;
   border-radius: 4px;
-  max-width: 1500px;
+  max-width: 1200px;
   width: 100%;
   margin: 0 auto;
+
+  .v-list-item__content {
+    overflow: unset;
+  }
 }
 </style>

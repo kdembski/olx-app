@@ -81,7 +81,6 @@ watch([consoleStore.items, selectedLabels], async () => {
     flex-direction: column;
     overflow: hidden;
     height: 20%;
-    max-height: 200px;
     max-width: 100vw;
     border-top: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
     background-color: rgb(var(--v-theme-surface));

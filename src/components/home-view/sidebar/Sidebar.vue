@@ -20,6 +20,7 @@ import Settings from "@/components/home-view/sidebar/Settings.vue";
   height: 100%;
   width: 30%;
   max-width: 400px;
+  min-width: 300px;
   overflow: auto;
   padding: 10px 12px;
   border-right: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
