@@ -29,6 +29,7 @@ withDefaults(
 
 <style lang="scss">
 .c-button {
+  color: rgba(var(--v-theme-on-surface), var(--v-high-emphasis-opacity));
   font-weight: 600;
 
   &.v-btn--size-large {

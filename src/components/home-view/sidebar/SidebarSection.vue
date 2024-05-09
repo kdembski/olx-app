@@ -14,9 +14,10 @@
   gap: 12px;
 
   &__title {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.5px;
+    text-transform: uppercase;
     padding: 1px 0;
     color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
     border-bottom: 1px solid
